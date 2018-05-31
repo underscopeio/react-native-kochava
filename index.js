@@ -1,15 +1,12 @@
-import React from 'react-native';
+import { NativeModules } from 'react-native'
 
-const RNKochava = React.NativeModules.RNKochava;
+const RNKochava = NativeModules.RNKochava
 
 export default {
-  init: (options) => {
-    return RNKochava.init(options);
+  identityLink: identity => {
+    return RNKochava.identityLink(identity)
   },
-  identityLink: (identity) => {
-    return RNKochava.identityLink(identity);
+  sendEvent: (name, options = {}) => {
+    return RNKochava.sendEvent(name, options)
   },
-  sendEvent: (name, options) => {
-    return RNKochava.sendEvent(name, options);
-  },
-};
+}
