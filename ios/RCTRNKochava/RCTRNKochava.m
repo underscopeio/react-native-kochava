@@ -12,6 +12,7 @@ RCT_REMAP_METHOD(init,
 {
     BOOL *enableDebug = [RCTConvert BOOL:options[@"enableDebug"]];
     NSString *appId = [RCTConvert NSString:options[@"appId"]];
+{
     dispatch_async(dispatch_get_main_queue(), ^{
         NSMutableDictionary *trackerParametersDictionary = [NSMutableDictionary dictionary];
         trackerParametersDictionary[kKVAParamAppGUIDStringKey] = appId;
@@ -20,7 +21,7 @@ RCT_REMAP_METHOD(init,
         }
         [KochavaTracker.shared configureWithParametersDictionary:trackerParametersDictionary delegate:self];
     });
-    resolve(@"Hello World!");
+ 
 }
 
 RCT_EXPORT_METHOD(identityLink:(NSDictionary *)identityLinkDictionary
@@ -28,7 +29,7 @@ RCT_EXPORT_METHOD(identityLink:(NSDictionary *)identityLinkDictionary
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
     [KochavaTracker.shared sendIdentityLinkWithDictionary:identityLinkDictionary];
-    resolve(@"Hello World!");
+    resolve(@"");
 }
 
 RCT_EXPORT_METHOD(sendEvent:(NSString *)eventName
@@ -37,7 +38,7 @@ RCT_EXPORT_METHOD(sendEvent:(NSString *)eventName
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
     [KochavaTracker.shared sendEventWithNameString:eventName infoDictionary:info];
-    resolve(@"Hello World!");
+    resolve(@"");
 }
 
 @end
