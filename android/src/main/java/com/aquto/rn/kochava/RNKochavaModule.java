@@ -20,38 +20,24 @@ class RNKochavaModule extends ReactContextBaseJavaModule {
     private Context context;
     private static Feature kTracker;
 
-    public RNKochavaModule(ReactApplicationContext reactContext) {
+    public RNKochavaModule(ReactApplicationContext reactContext, String appId, Boolean enableDebug) {
         super(reactContext);
-        this.context = reactContext;
+
+        if (enableDebug) {
+            Feature.enableDebug(true);
+        }
+
+        HashMap<String, Object> datamap = new HashMap<String, Object>();
+        datamap.put(Feature.INPUTITEMS.KOCHAVA_APP_ID , appId);
+        datamap.put(Feature.INPUTITEMS.REQUEST_ATTRIBUTION, true);
+
+        kTracker = new Feature(reactContext , datamap);
     }
 
-    /**
-     * @return the name of this module. This will be the name used to {@code require()} this module
-     * from javascript.
-     */
+
     @Override
     public String getName() {
         return "RNKochava";
-    }
-
-    @ReactMethod
-    public void init(ReadableMap options, Promise promise) {
-        try {
-            if (options.getBoolean("enableDebug")) {
-              Feature.enableDebug(true);
-            }
-            HashMap<String, Object> datamap = new HashMap<String, Object>();
-
-            datamap.put(Feature.INPUTITEMS.KOCHAVA_APP_ID , options.getString("appId"));
-            datamap.put(Feature.INPUTITEMS.REQUEST_ATTRIBUTION, true);
-            kTracker = new Feature( this.context , datamap);
-
-
-
-            promise.resolve("Done");
-        } catch (Exception e) {
-            promise.reject(e);
-        }
     }
 
     @ReactMethod
